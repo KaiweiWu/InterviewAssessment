@@ -1,3 +1,5 @@
+using CanWeFixItService;
+using CanWeFixItService.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -25,6 +27,8 @@ namespace CanWeFixItApi
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "CanWeFixItApi", Version = "v1" });
             });
             services.AddSingleton<IDatabaseService, DatabaseService>();
+            services.AddSingleton<IMarketDataService, MarketDataService>();
+            services.AddSingleton<IInstrumentService, InstrumentService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

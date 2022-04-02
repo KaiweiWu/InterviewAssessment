@@ -1,4 +1,4 @@
-namespace CanWeFixItService
+namespace CanWeFixItService.Models
 {
     public class MarketData
     {
@@ -10,6 +10,14 @@ namespace CanWeFixItService
 
     public class MarketDataDto
     {
+        public MarketDataDto(MarketData marketData, int instrumentId)
+        {
+            Id = marketData.Id;
+            DataValue = marketData.DataValue;
+            InstrumentId = instrumentId;
+            Active = marketData.Active;
+        }
+
         public int Id { get; set; }
         public long? DataValue { get; set; }
         public int? InstrumentId { get; set; }

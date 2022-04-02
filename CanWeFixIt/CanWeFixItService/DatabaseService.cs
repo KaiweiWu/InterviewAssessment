@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using CanWeFixItService.Models;
 using Dapper;
 using Microsoft.Data.Sqlite;
 
@@ -13,7 +14,7 @@ namespace CanWeFixItService
         // Using a name and a shared cache allows multiple connections to access the same
         // in-memory database
         const string connectionString = "Data Source=DatabaseService;Mode=Memory;Cache=Shared";
-        private SqliteConnection _connection;
+        private readonly SqliteConnection _connection;
 
         public DatabaseService()
         {
@@ -23,14 +24,14 @@ namespace CanWeFixItService
             _connection.Open();
         }
         
-        public IEnumerable<Instrument> Instruments()
+        public async Task<IEnumerable<Instrument>> Instruments()
         {
-            return _connection.QueryAsync<Instrument>("SQL GOES HERE");
+            return await _connection.QueryAsync<Instrument>("SELECT * FROM Instrument WHERE Active = 1");
         }
 
         public async Task<IEnumerable<MarketData>> MarketData()
         {
-            return await _connection.QueryAsync<MarketData>("SELECT Id, DataValue FROM MarketData WHERE Active = 0");
+            return await _connection.QueryAsync<MarketData>("SELECT * FROM MarketData WHERE Active = 1");
         }
 
         /// <summary>

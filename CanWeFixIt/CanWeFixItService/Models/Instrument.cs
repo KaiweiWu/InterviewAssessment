@@ -1,4 +1,4 @@
-﻿namespace CanWeFixItService
+﻿namespace CanWeFixItService.Models
 {
     public class Instrument
     {
