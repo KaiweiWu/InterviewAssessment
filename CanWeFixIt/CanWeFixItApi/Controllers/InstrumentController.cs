@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using CanWeFixItService.Models;
+using CanWeFixItService.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CanWeFixItApi.Controllers
@@ -8,17 +10,17 @@ namespace CanWeFixItApi.Controllers
     [Route("v1/instruments")]
     public class InstrumentController : ControllerBase
     {
-        private readonly IDatabaseService _database;
+        private readonly IInstrumentService _instrumentService;
         
-        public InstrumentController(IDatabaseService database)
+        public InstrumentController(IInstrumentService instrumentService)
         {
-            _database = database;
+            _instrumentService = instrumentService;
         }
         
-        // GET
-        public async Task<ActionResult<IEnumerable<Instrument>>> Get()
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<Instrument>>> GetInstruments()
         {   
-            return Ok(_database.Instruments().Result);
+            return Ok(await _instrumentService.GetInstrumentsAsync());
         }
     }
 }

@@ -1,19 +1,26 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using CanWeFixItService.Models;
+using CanWeFixItService.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CanWeFixItApi.Controllers
 {
     [ApiController]
-    [Route("v2/marketdata")]
+    [Route("v1/marketdata")]
     public class MarketDataController : ControllerBase
     {
-        // GET
-        public async Task<ActionResult<IEnumerable<MarketDataDto>>> Get()
-        {
-            // TODO:
+        private readonly IMarketDataService _marketDataService;
 
-            return NotFound();
+        public MarketDataController(IMarketDataService marketDataService)
+        {
+            _marketDataService = marketDataService;
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<MarketDataDto>>> GetMarketData()
+        {
+            return Ok(await _marketDataService.GetMarketDataAsync());
         }
     }
 }
